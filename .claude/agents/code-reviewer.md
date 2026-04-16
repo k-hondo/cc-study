@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Use PROACTIVELY when code changes are detected. コード品質・保守性・正確性をレビューするエージェント。セキュリティは security-reviewer が担当する。
+description: コード変更を検知した際に自律的に呼び出す。コード品質・保守性・正確性をレビューするエージェント。セキュリティは security-reviewer が担当する。
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

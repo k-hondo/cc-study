@@ -1,7 +1,7 @@
 ---
 name: test-writer
 description: 新機能実装後またはテストカバレッジが不十分な際に呼び出す。テストケースの設計と実装を担当する。
-tools: Read, Write, Bash
+tools: Read, Write, Bash, Glob, Grep
 model: sonnet
 ---
 

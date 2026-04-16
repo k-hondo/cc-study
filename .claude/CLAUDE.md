@@ -64,5 +64,5 @@ public/
 
 - **code-writer**: コード実装のみに専念
 - **test-writer**: テストケースの設計と実装
-- **code-reviewer**: コード品質とセキュリティチェック
+- **code-reviewer**: コード品質・保守性・正確性のチェック
 - **security-reviewer**: セキュリティチェック
