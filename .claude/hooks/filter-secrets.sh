@@ -6,27 +6,23 @@ if ! command -v jq &> /dev/null; then
 fi
 
 # stdin から JSON を読み込み、prompt フィールドを抽出
-prompt=$(jq -r '.prompt // empty')
+prompt=$(jq -r '.prompt // empty') || exit 0
 
 # APIキーパターンを検知
-if printf '%s' "$prompt" | grep -qE "sk-[a-zA-Z0-9_-]{20,}"; then
-    echo '{"decision": "block", "reason": "APIキーが含まれている可能性があります。機密情報を削除してから再度お試しください。"}'
-    exit 0
-fi
+block_message='{"decision": "block", "reason": "APIキーが含まれている可能性があります。機密情報を削除してから再度お試しください。"}'
 
-if printf '%s' "$prompt" | grep -qE "AKIA[A-Z0-9]{16}"; then
-    echo '{"decision": "block", "reason": "APIキーが含まれている可能性があります。機密情報を削除してから再度お試しください。"}'
-    exit 0
-fi
+patterns=(
+    "sk-[a-zA-Z0-9_-]{20,}"
+    "AKIA[A-Z0-9]{16}"
+    "ghp_[a-zA-Z0-9]{36}"
+    "AIza[0-9A-Za-z_-]{35}"
+)
 
-if printf '%s' "$prompt" | grep -qE "ghp_[a-zA-Z0-9]{36}"; then
-    echo '{"decision": "block", "reason": "APIキーが含まれている可能性があります。機密情報を削除してから再度お試しください。"}'
-    exit 0
-fi
-
-if printf '%s' "$prompt" | grep -qE "AIza[0-9A-Za-z_-]{35}"; then
-    echo '{"decision": "block", "reason": "APIキーが含まれている可能性があります。機密情報を削除してから再度お試しください。"}'
-    exit 0
-fi
+for pattern in "${patterns[@]}"; do
+    if printf '%s' "$prompt" | grep -qE "$pattern"; then
+        echo "$block_message"
+        exit 0
+    fi
+done
 
 exit 0
