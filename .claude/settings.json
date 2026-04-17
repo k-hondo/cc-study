@@ -10,14 +10,27 @@
       "Bash(git log *)",
       "Bash(git status)"
     ],
-    "deny": [
-      "Bash(rm -rf *)",
-      "Bash(sudo *)",
-      "Read(./.env*)"
-    ],
-    "ask": [
-      "Bash(git push *)",
-      "Bash(git commit *)"
+    "deny": ["Bash(rm -rf *)", "Bash(sudo *)", "Read(./.env*)"],
+    "ask": ["Bash(git push *)", "Bash(git commit *)"]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/add-guardrail.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/filter-secrets.sh"
+          }
+        ]
+      }
     ]
   }
 }
